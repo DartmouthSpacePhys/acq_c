@@ -41,6 +41,7 @@ struct parsed_options {
 	char *monfile;
 	char *outfile;
 	char *ranges;
+        bool diag;
 	bool verbose;
 	int n_chan;
 	bool montext;

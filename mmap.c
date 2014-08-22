@@ -190,7 +190,7 @@ int main(int argc, char *argv[])
 
 			bofft = comedi_get_buffer_offset(dev, SUBDEV);
 
-			if (strcmp(options.outfile,"") != 0) {
+			if (strcmp(options.outfile,"") != 0 && !options.diag ) {
 
 				ret = fwrite(map+bofft, 2, slicesamp, ofile);
 			
@@ -317,7 +317,7 @@ int mmap_parse_options(struct parsed_options *options, int argc, char *argv[])
 {
 	int c;
 
-	while (-1 != (c = getopt(argc, argv, "m:o:r:n:N:F:d:X:tvh"))) {
+	while (-1 != (c = getopt(argc, argv, "m:o:r:n:N:F:d:X:tvDh"))) {
 		switch (c) {
 		case 'm':
 			options->monfile = optarg;
@@ -346,6 +346,9 @@ int mmap_parse_options(struct parsed_options *options, int argc, char *argv[])
 		case 'v':
 			options->verbose = true;
 			break;
+		case 'D':
+			options->diag = true;
+			break;
 		case 'X':
 			options->slicemax = strtoull(optarg, NULL, 0);
 			break;
@@ -361,6 +364,7 @@ int mmap_parse_options(struct parsed_options *options, int argc, char *argv[])
 			printf("\t-n <#>\t\t# Channels [1]\n");
 			printf("\t-X <#>\t\tNumber of Slices to acquire [0->inf]\n");
 			printf("\t-F <#>\t\tFrequency [20MHz]\n");
+			printf("\t-D\t\tDiagnostic mode (no acquisition)\n");
 			printf("\t-v\t\tBe Verbose\n");
 			printf("\n");
 			exit(1);
@@ -377,11 +381,12 @@ int mmap_parse_options(struct parsed_options *options, int argc, char *argv[])
 void mmap_init_parsed_options(struct parsed_options *options)
 {
 	memset(options, 0, sizeof(struct parsed_options));
-	options->monfile = "./latest_acquisition.data";
+	options->monfile = "./rtd_digitizer.data";
 	options->outfile = "";
 	options->ranges = "1111";
 	options->n_chan = DEFNCHAN;
 	options->freq = DEFFREQ;
+	options->diag = false;
 	options->verbose = false;
 	options->value = 0;
 	options->montext = false;
