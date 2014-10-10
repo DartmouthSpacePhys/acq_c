@@ -24,6 +24,8 @@
 #define DEVICE "/dev/comedi0"
 #define SUBDEV 0
 
+#define DEF_MONFILE "/tmp/rtd/rtd_digitizer.data"
+
 // Differential input
 #define AREF AREF_DIFF
 
@@ -355,7 +357,7 @@ int mmap_parse_options(struct parsed_options *options, int argc, char *argv[])
 		case 'h':
 		default:
 			printf("cmd Options:\n");
-			printf("\t-m <file>\tMonitor File\n");
+			printf("\t-m <file>\tMonitor File [default: \n");
 			printf("\t-o <file>\tOutput File\n");
 			printf("\t-d <#>\t\tMonitor dt\n");
 			printf("\t-t <#>\t\tASCII monitor file [false]\n");
@@ -381,7 +383,7 @@ int mmap_parse_options(struct parsed_options *options, int argc, char *argv[])
 void mmap_init_parsed_options(struct parsed_options *options)
 {
 	memset(options, 0, sizeof(struct parsed_options));
-	options->monfile = "./rtd_digitizer.data";
+	options->monfile = DEF_MONFILE;
 	options->outfile = "";
 	options->ranges = "1111";
 	options->n_chan = DEFNCHAN;
