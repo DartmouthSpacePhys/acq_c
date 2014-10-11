@@ -357,7 +357,7 @@ int mmap_parse_options(struct parsed_options *options, int argc, char *argv[])
 		case 'h':
 		default:
 			printf("cmd Options:\n");
-			printf("\t-m <file>\tMonitor File [default: \n");
+			printf("\t-m <file>\tMonitor File [default: %s]\n",DEF_MONFILE);
 			printf("\t-o <file>\tOutput File\n");
 			printf("\t-d <#>\t\tMonitor dt\n");
 			printf("\t-t <#>\t\tASCII monitor file [false]\n");
